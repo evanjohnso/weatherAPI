@@ -15,7 +15,7 @@ $(document).ready(function() {
         } else {
           reject(Error(request.statusText));
         }
-      }
+      };
       request.open("GET", url, true);
       request.send();
     });
@@ -24,18 +24,25 @@ $(document).ready(function() {
       let body = JSON.parse(response);
       let sunriseUnix = body.sys.sunrise;
       let sunsetUnix = body.sys.sunset;
+      let weatherIcon = body.weather.icon;
+      let icon = ("<img src='http://openweathermap.org/img/w/" + body.weather[0].icon + ".png'>");
       let sunrise = moment.unix(sunriseUnix).format('hh:mm a');
       let sunset = moment.unix(sunsetUnix).format('hh:mm a');
       $('#showHumidity').text(`The humidity in ${city} is ${body.main.humidity}%`);
-      $('#showTemp').text(`The temperature in Kelvins is ${body.main.temp} degrees.`);
+      $('#showTemp').text(`The temperature is ${body.main.temp.toFixed(0)} degrees Farenheit.`);
+      $('#minTemp').text(`The Low today is ${body.main.temp_min.toFixed(0)} degrees Farenheit.`);
+      $('#maxTemp').text(`The High today is ${body.main.temp_max.toFixed(0)} degrees Farenheit.`);
       $('#showSunrise').text(`The Sunrise today in ${city} is ${sunrise}.`);
       $('#showSunset').text(`The Sunset today in ${city} is ${sunset}.`);
+      $('#cityCoords').text(`Your city is ${city} and Longitude/Latitude coordinates are ${body.coord.lon}:${body.coord.lat}`);
+      $('#weatherIcon').html(icon);
 
     }, function(error) {
       $('.showErrors').text(`There was an error processing your request: ${error.message}`);
     });
   });
 });
+
 
 
 
