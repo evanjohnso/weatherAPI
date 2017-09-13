@@ -56,21 +56,11 @@ $(document).ready(function() {
       $('#visibility').text(`Visibility is ${body.visibility}`);
       $('#cityCoords').text(`Your city is ${city} and Longitude/Latitude coordinates are ${body.coord.lon} : ${body.coord.lat}`);
       $('#weatherIcon').html(icon);
-      console.log(lat);
-      console.log(lon);
-      console.log("this is" + this);
-      let go2 = (lat, lon) => {
-        console.log("Hi I see: " + lat);
-        promiseTwo.then(function(response) {
-          let body = JSON.parse(response);
-          let uvLevel = body.value;
-          $('#uvLevel').text(uvLevel);
         }, function(error) {
         $('.showErrors').text(`There was an error processing your request: ${error.message}`);
         });
-      };
-      return go2();
-    });
+      });
+    };
   });
 });
 
